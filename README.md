@@ -22,11 +22,11 @@ OTTO_SANDBOX_CLIENT_SECRET=d122d788-755e-48cf-87c4-b0095160be28
 Bereite das Django-Projekt in einer Art und Weise vor, sodass andere Personen es lokal auf ihren Computern einfach zum Laufen bringen können.
 
 ### Task 2:
-Die "omnidock"-App benötigt Modelle und Endpunkte, sodass aggregierte Informationen über Orders und Shipments über API-Endpunkte anfragbar sind. Die OmniDock-Modelle sollten je nach Auswahl natürlich nicht nur OTTO Orders und Shipments und Orders herausgeben, sondern ebenfalls theoretisch in der Lage sein, auf weitere Apps und Datenbankmodelle zuzugreifen. Du kannst es dir vorstellen, als eine Art "Super"-Klasse über andere Modelle aus anderen Apps mit dem gleichen semantischen Hintergrund. Syntaktisch unterscheiden sich die Modelle von Marktplatz zu Marktplatz. **Etwas mehr Kontext zum Verständnis:** In der Praxis haben wir verschiedene Clients, welche in der Zukunft natürlich nur ihre eigenen aggregierten Informationen sehen dürfen. Die Aufspaltung und Trennung wird über zusätzliche Modelle wie Client und ItemMaster geregelt. Ein Client hat verschiedene ItemMaster. ItemMaster-Instanzen haben eine omnidockSku als Attribut hinterlegt. Dies ist die Referenz, welche wir auf verschiedenen Marktplätzen angeben, um nachverfolgen zu können, zu wem welches Order und welches Shipment (o.ä.) gehört. Für die Case Study können wir einfach alle Informationen herausgeben, ohne den Zugriff zu beschränken.
+Die "omnidock"-App benötigt Modelle und Endpunkte, sodass aggregierte Informationen über Orders und Shipments über API-Endpunkte anfragbar sind. Die OmniDock-Modelle sollten je nach Auswahl natürlich nicht nur OTTO Orders und Shipments und Orders herausgeben, sondern ebenfalls theoretisch in der Lage sein, auf weitere Apps und Datenbankmodelle zuzugreifen. Du kannst es dir vorstellen, als eine Art "Super"-Klasse über andere Modelle aus anderen Apps mit dem gleichen semantischen Hintergrund. Syntaktisch unterscheiden sich die Modelle von Marktplatz zu Marktplatz. **Etwas mehr Kontext zum Verständnis:** In der Praxis haben wir verschiedene Clients, welche in der Zukunft natürlich nur ihre eigenen aggregierten Informationen sehen dürfen. Die Aufspaltung und Trennung wird über zusätzliche Modelle wie Client und ItemMaster geregelt. Ein Client hat verschiedene ItemMaster. ItemMaster-Instanzen haben eine omnidockSku als Attribut hinterlegt. Dies ist die Referenz, welche wir auf verschiedenen Marktplätzen angeben, um nachverfolgen zu können, zu wem welche Orders und welche Shipments (o.ä.) gehört. Für die Case Study ist dies nicht nötig.
 
 Wir würden gerne schlussendlich über die API sehen wollen
 - Wie oft sich jedes Produkt verkauft hat und was die Gross Einnahmen dabei waren.
-- Welche Orders bereit sind Fulfilled zu werden, bzw. welche Orders bereits fulfilled wurden. 
+- Welche Orders bereit sind Fulfilled zu werden, bzw. welche Orders bereits fulfilled wurden. Falls ein Fulfillment stattgefunden hat, dann interessiert uns das shipping Date hier zusätzlich.
 
 
 ### Task 3:
@@ -34,6 +34,5 @@ Die "otto"-App benötigt die Datenbankmodelle, um Orders und Shipments von OTTO 
 
 ### Task 4:
 Eine vollständige Test-Suite ist nicht notwendig. Falls du eine einfache und gute Idee hast, wie man das ganze Setup testen könnte, kannst du das natürlich ausformulieren. Setze eine minimale Postman-Collection auf, sodass lokal mit deinem Django-Projekt interagiert werden kann. Füge bitte nach eigenem Ermessen Logging-Statements in deinen Code ein, sodass der Informationsfluss nachvollziehbar ist.
-
 
 Für die Sandbox Datenbank sind insgesamt 16 Orders in verschiedenen Fulfilment States hinterlegt. Es existieren weiterhin bereits 5 Shipments zu den Orders. 
