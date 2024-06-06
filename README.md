@@ -35,4 +35,4 @@ Die "otto"-App benötigt die Datenbankmodelle, um Orders und Shipments von OTTO 
 ### Task 4:
 Eine vollständige Test-Suite ist nicht notwendig. Falls du eine einfache und gute Idee hast, wie man das ganze Setup testen könnte, kannst du das natürlich ausformulieren. Setze eine minimale Postman-Collection auf, sodass lokal mit deinem Django-Projekt interagiert werden kann. Füge bitte nach eigenem Ermessen Logging-Statements in deinen Code ein, sodass der Informationsfluss nachvollziehbar ist.
 
-Für die Sandbox Datenbank sind insgesamt 16 Orders in verschiedenen Fulfilment States hinterlegt. Es existieren weiterhin bereits 5 Shipments zu den Orders. Bei Fragen kannst du dich gerne an Sebastian wenden. 
+Für die Sandbox Datenbank sind insgesamt 16 Orders in verschiedenen Fulfilment States hinterlegt. Es existieren weiterhin bereits 6 Shipments zu den Orders. Bei Fragen kannst du dich gerne an Sebastian wenden. 
