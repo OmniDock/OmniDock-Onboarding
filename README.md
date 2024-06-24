@@ -2,7 +2,9 @@
 
 ## Allgemeine Hinweise
 
-Die technische Seite von OmniDock beschäftigt sich derzeit überwiegend mit der API-Integration zu verschiedenen Marktplätzen und der Aufbereitung/Aggregation der Daten für das Frontend. Um eine erfolgreiche Integration zu erreichen, welche sich auf eine ständig ändernde API der Marktplätze anpassen lässt, sind erweiterbare/ersetzbare API-Wrapper sowie die hauseigenen Datenbankmodelle von besonderer Wichtigkeit. Gepaart mit asynchronen Routinen zum Laden der aktuellsten Daten im Hintergrund können wir das OmniDock-Team und somit auch unsere Kunden bestmöglich unterstützen. Laden, Speichern und Visualisieren sind die ersten Schritte; zum übergeordneten Ziel zählt auch das Übertragen von Daten zum Marktplatz, um eine einheitliche Operating Suite zu kreieren, die so automatisiert wie möglich agieren kann.
+Die technische Seite von OmniDock beschäftigt sich derzeit überwiegend mit der API-Integration zu verschiedenen Marktplätzen und der Aufbereitung/Aggregation der Daten für das Frontend. Um eine erfolgreiche Integration zu erreichen, welche sich auf eine ständig ändernde API der Marktplätze anpassen lässt, sind erweiterbare/ersetzbare API-Wrapper sowie die hauseigenen Datenbankmodelle von besonderer Wichtigkeit. Gepaart mit asynchronen Routinen zum Laden der aktuellsten Daten im Hintergrund können wir das OmniDock-Team und somit auch unsere Kunden bestmöglich unterstützen. Laden, Speichern und Visualisieren sind die ersten Schritte; zum übergeordneten Ziel zählt auch das Übertragen von Daten zum Marktplatz, um eine einheitliche Operating Suite zu kreieren, die so automatisiert wie möglich agieren kann. 
+
+Zeitaufwand: Nimm dir bitte 3-4 Stunden für die Aufgaben Zeit. Alles was nicht implementiert wurde, kann gerne auch theoretisch als Fließtext hochgeladen werden. Natürlich, je mehr Code vorhanden ist, desto besser können wir deine Programming-Skills einschätzen. Falls du Spaß daran hast, dann kannst du natürlich auch gerne länger daran arbeiten. ChatGPT oä. als Hilfe ist erlaubt. Erfahrungsgemäß stolpert ChatGPT ab und zu über blöde Fehler, der herausgegebene Code sollte in jedem Fall inspiziert werden und auf logische Fehler überprüft werden. 
 
 ## Setup 
 
@@ -11,6 +13,13 @@ Das OmniDock-Onboarding-Repository enthält ein nahezu leeres Django-Projekt. In
 Verwende für die folgenden Aufgaben, insofern API-Requests notwendig sind, die  [OTTO Sandbox API](https://api.otto.market/docs). Wir wollen in dieser "Case Study" Informationen bei OTTO anfragen, diese speichern und über eine API öffentlich zugänglich machen. "Authentifizierung" und "Autorisierung" sind nicht notwendig, alle Endpunkte können öffentlich zugänglich bleiben.
 
 **Disclaimer:** Leider sind Sandbox-Umgebungen oft nicht optimal zur Entwicklung geeignet, weshalb dir hier und da das Schummeln/Kreativsein erlaubt ist falls notwendig. Dir steht es frei, Django Local Memory Caching und SQLite zu verwenden oder PostgreSQL zusammen mit Redis über ein Docker-Setup (Muss absolut nicht sein, uns ist der Python-Code hier deutlich wichtiger als ein Docker-Setup und die Django-Config dazu). Verwende alle Libraries, die du gerne verwenden willst, ich freue mich, neue kennenzulernen! Aufgaben müssen nicht in der Reihenfolge erledigt werden, wie diese hier vorgeschlagen werden. **Es gibt kein richtig und falsch, solange die Design-Entscheidungen einen Grund haben.** Für die Sandbox Datenbank sind insgesamt 16 Orders in verschiedenen Fulfilment States hinterlegt. Es existieren weiterhin bereits 6 Shipments zu den Orders. Bei Fragen kannst du dich gerne an Sebastian wenden.
+
+
+### Eventuell sinnvolle Libraries:
+- [Dotenv](https://pypi.org/project/python-dotenv/)
+- [Django Restframework](https://www.django-rest-framework.org/) (Zusammen mit den Serializern)
+
+
 
 ### API Credentials für die OTTO Sandbox API 
 
