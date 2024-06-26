@@ -5,5 +5,8 @@ class Command(BaseCommand):
     help = 'Fetch data from OTTO API'
 
     def handle(self, *args, **kwargs):
-        OrderTask.run()
-        self.stdout.write(self.style.SUCCESS('Successfully fetched and saved OTTO data'))
+        try:
+            OrderTask.run()
+            self.stdout.write(self.style.SUCCESS('Successfully fetched and saved OTTO data'))
+        except:
+            self.stdout.write(self.style.ERROR('Error in fetching and saving OTTO data'))

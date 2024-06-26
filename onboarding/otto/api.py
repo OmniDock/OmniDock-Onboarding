@@ -50,4 +50,4 @@ class OttoAPIWrapper:
                 raise Exception(f"Failed to fetch orders. Status code: {response.status_code}")
         
 
-
+    
