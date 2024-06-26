@@ -24,8 +24,11 @@ class Order(models.Model):
 class PositionItem(models.Model):
     position_item_id = models.CharField(max_length=100, primary_key=True)
     fulfillment_status = models.CharField(max_length=100)
+    sentDate = models.DateTimeField()
     item_value_gross_price = models.ForeignKey(ItemValueGrossPrice,null=True ,on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    tracking_info = models.ForeignKey(TrackingInfo, null=True, on_delete=models.SET_NULL)
+
     
 

@@ -16,15 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from omnidock.views import ProductSalesViewSet, FulfilledOrdersViewSet
+# from omnidock.views import ProductSalesListView, OrderFulfillmentListView
 from rest_framework.routers import DefaultRouter
 
 
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'api/product-sales', ProductSalesViewSet, basename='product-sales')
-router.register(r'api/fulfilled-orders', FulfilledOrdersViewSet, basename='fulfilled-orders')
+# router.register(r'api/product-sales', ProductSalesListView, basename='product-sales')
+# router.register(r'api/fulfilled-orders', OrderFulfillmentListView, basename='fulfilled-orders')
 
 urlpatterns = [
     path("admin/", admin.site.urls),

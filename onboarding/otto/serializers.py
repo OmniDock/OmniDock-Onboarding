@@ -1,37 +1,5 @@
 from rest_framework import serializers
-from .models import Product, ItemValueGrossPrice, PositionItem, Order
-
-
-
-class TrackingInfo:
-    def __init__(self, carrier, tracking_number):
-        self.carrier = carrier,
-        self.tracking_number = tracking_number,
-
-class Product:
-    def __init__(self, sku, product_title, article_number):
-        self.sku = sku
-        self.product_title = product_title
-        self.article_number = article_number
-
-class ItemValueGrossPrice:
-    def __init__(self, amount, currency):
-        self.amount = amount
-        self.currency = currency
-
-class Order:
-    def __init__(self, sales_order_id, order_number, order_date):
-        self.sales_order_id = sales_order_id
-        self.order_number = order_number
-        self.order_date = order_date
-
-class PositionItem:
-    def __init__(self, position_item_id, fulfillment_status, item_value_gross_price, product, order):
-        self.position_item_id = position_item_id
-        self.fulfillment_status = fulfillment_status
-        self.item_value_gross_price = item_value_gross_price
-        self.product = product
-        self.order = order
+from .models import Product, ItemValueGrossPrice, PositionItem, Order, TrackingInfo
 
 class TrackingInfoSerializer(serializers.Serializer):
     carrier = serializers.CharField(max_length=20)
@@ -66,7 +34,7 @@ class ItemValueGrossPriceSerializer(serializers.Serializer):
     currency = serializers.CharField(max_length=10)
 
     def create(self, validated_data):
-        return ItemValueGrossPrice.objects.create(**validated_data)
+        return ItemValueGrossPrice.objects.update_or_create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.amount = validated_data.get('amount', instance.amount)
@@ -77,7 +45,6 @@ class ItemValueGrossPriceSerializer(serializers.Serializer):
 class OrderSerializer(serializers.Serializer):
     sales_order_id = serializers.CharField(max_length=100)
     order_number = serializers.CharField(max_length=100)
-    order_date = serializers.DateTimeField()
 
     def create(self, validated_data):
         return Order.objects.create(**validated_data)
@@ -92,14 +59,17 @@ class OrderSerializer(serializers.Serializer):
 class PositionItemSerializer(serializers.Serializer):
     position_item_id = serializers.CharField(max_length=100)
     fulfillment_status = serializers.CharField(max_length=100)
+    sentDate = serializers.DateTimeField()
     item_value_gross_price = ItemValueGrossPriceSerializer(required=False)
     product = ProductSerializer()
     order = OrderSerializer()
+    trackingInfo = TrackingInfoSerializer()
 
     def create(self, validated_data):
-        item_value_gross_price_data = validated_data.pop('item_value_gross_price', None)
+        item_value_gross_price_data = validated_data.pop('itemValueGrossPrice', None)
         product_data = validated_data.pop('product')
         order_data = validated_data.pop('order')
+        tracking_info_data = validated_data.pop('trackingInfo')
         
         item_value_gross_price = None
         if item_value_gross_price_data:
@@ -107,6 +77,7 @@ class PositionItemSerializer(serializers.Serializer):
         
         product = Product.objects.create(**product_data)
         order = Order.objects.create(**order_data)
+        tracking_info = TrackingInfo.objects.create(**tracking_info_data)
         
         return PositionItem.objects.create(
             item_value_gross_price=item_value_gross_price,
@@ -116,7 +87,7 @@ class PositionItemSerializer(serializers.Serializer):
         )
 
     def update(self, instance, validated_data):
-        item_value_gross_price_data = validated_data.pop('item_value_gross_price', None)
+        item_value_gross_price_data = validated_data.pop('itemValueGrossPrice', None)
         product_data = validated_data.pop('product', None)
         order_data = validated_data.pop('order', None)
 
@@ -133,18 +104,18 @@ class PositionItemSerializer(serializers.Serializer):
         if product_data:
             product = instance.product
             product.sku = product_data.get('sku', product.sku)
-            product.product_title = product_data.get('product_title', product.product_title)
+            product.product_title = product_data.get('productTitle', product.product_title)
             product.article_number = product_data.get('article_number', product.article_number)
             product.save()
 
         if order_data:
             order = instance.order
-            order.sales_order_id = order_data.get('sales_order_id', order.sales_order_id)
-            order.order_number = order_data.get('order_number', order.order_number)
-            order.order_date = order_data.get('order_date', order.order_date)
+            order.sales_order_id = order_data.get('salesOrderId', order.sales_order_id)
+            order.order_number = order_data.get('orderNumber', order.order_number)
+            order.order_date = order_data.get('orderDate', order.order_date)
             order.save()
 
-        instance.position_item_id = validated_data.get('position_item_id', instance.position_item_id)
-        instance.fulfillment_status = validated_data.get('fulfillment_status', instance.fulfillment_status)
+        instance.position_item_id = validated_data.get('positionItemId', instance.position_item_id)
+        instance.fulfillment_status = validated_data.get('fulfillmentStatus', instance.fulfillment_status)
         instance.save()
         return instance

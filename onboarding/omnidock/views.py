@@ -1,21 +1,24 @@
-from rest_framework import serializers, viewsets
-from .models import OmnidockProduct, OmnidockOrder
+from django.db.models import Sum, Count, F
+from rest_framework import generics
+from rest_framework.response import Response
+from .models import Order, Product, PositionItem
+from .serializers import ProductSalesSerializer, OrderFulfillmentSerializer
 
-class OmnidockProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OmnidockProduct
-        fields = ('sku', 'product_title', 'gross_income', 'units_sold')
+# class ProductSalesListView(generics.ListAPIView):
+#     serializer_class = ProductSalesSerializer
 
-class ProductSalesViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = OmnidockProduct.objects.all()
-    serializer_class = OmnidockProductSerializer
+#     def get_queryset(self):
+#         return Product.objects.annotate(
+#             total_sales=Count('positionitem'),
+#             total_revenue=Sum('positionitem__item_value_gross_price__amount')
+#         )
+# 
+# class OrderFulfillmentListView(generics.ListAPIView):
+#     serializer_class = OrderFulfillmentSerializer
 
-
-class OmnidockOrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OmnidockOrder
-        fields = ('marketplace_order_id', 'omnidock_order_id', 'order_date', 'fulfillment_status', 'shipping_date')
-
-class FulfilledOrdersViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = OmnidockOrder.objects.filter(fulfillment_status='Fulfilled')
-    serializer_class = OmnidockOrderSerializer
+#     def get_queryset(self):
+#         return Order.objects.annotate(
+#             order_status=F('positionitem__fulfillment_status')
+#         ).filter(
+#             positionitem__fulfillment_status__in=['Ready to Fulfill', 'Fulfilled']
+#         ).distinct()
