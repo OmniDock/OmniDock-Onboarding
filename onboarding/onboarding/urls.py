@@ -15,9 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-import otto.views as ov
+from django.urls import path, include
+from omnidock.views import ProductSalesViewSet, FulfilledOrdersViewSet
+from rest_framework.routers import DefaultRouter
+
+
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'api/product-sales', ProductSalesViewSet, basename='product-sales')
+router.register(r'api/fulfilled-orders', FulfilledOrdersViewSet, basename='fulfilled-orders')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('', include(router.urls)),
 ]
