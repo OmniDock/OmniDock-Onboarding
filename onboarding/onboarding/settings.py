@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "otto",
     "omnidock",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

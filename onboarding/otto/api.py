@@ -1,5 +1,6 @@
 # otto/api.py
 
+import time
 import requests
 from dotenv import dotenv_values
 
@@ -29,7 +30,7 @@ class OttoAPIWrapper:
         else:
             raise Exception(f"Failed to authenticate. Status code: {response.status_code}")
 
-    def fetch_orders(self):
+    def get_orders(self, query_params=None):
         if not self.access_token:
             self.authenticate()
 
@@ -37,23 +38,16 @@ class OttoAPIWrapper:
         headers = {
             'Authorization': f'Bearer {self.access_token}'
         }
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(f"Failed to fetch orders. Status code: {response.status_code}")
+        
+        response = requests.get(url, headers=headers, params=query_params)
+        while True:
+            if response.status_code == 429:  # Rate limit exceeded
+                    retry_after = int(response.headers.get('Retry-After', 1))
+                    time.sleep(retry_after)
+            elif response.status_code == 200:
+                return response.json().get('resources', [])
+            else:
+                raise Exception(f"Failed to fetch orders. Status code: {response.status_code}")
+        
 
-    def fetch_shipments(self):
-        if not self.access_token:
-            self.authenticate()
 
-        url = f"{self.base_url}/v1/shipments"
-        headers = {
-            'Authorization': f'Bearer {self.access_token}'
-        }
-        response = requests.get(url, headers=headers)
-        print(response)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(f"Failed to fetch shipments. Status code: {response.status_code}")

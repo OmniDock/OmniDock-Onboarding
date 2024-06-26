@@ -20,6 +20,4 @@ import otto.views as ov
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-     path('fetch_orders/', ov.fetch_orders_view, name='fetch_orders'),
-     path('fetch_shipments/', ov.fetch_shipments_view, name='fetch_shipments'),
 ]
