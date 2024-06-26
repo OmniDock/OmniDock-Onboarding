@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class OmnidockOrder(models.Model):
-    marketplace_order_id = models.CharField(max_length=100)  # Order ID specific to the marketplace
-    omnidock_order_id = models.AutoField(primary_key=True)  # Omnidock specific order ID
+    marketplace_order_id = models.CharField(max_length=100)  
+    omnidock_order_id = models.AutoField(primary_key=True) 
     order_date = models.DateTimeField()
     fulfillment_status = models.CharField(max_length=100)
     shipping_date = models.DateTimeField(null=True, blank=True)
